@@ -10,16 +10,12 @@ export const idlFactory = ({ IDL }) => {
     'createdAt' : Time,
     'likes' : IDL.Nat,
     'imageUrl' : IDL.Text,
-    'category' : IDL.Opt(IDL.Text),
+    'category' : IDL.Text,
     'comments' : IDL.Vec(Comment),
   });
   return IDL.Service({
     'addComment' : IDL.Func([PostId, IDL.Text], [Result], []),
-    'createPost' : IDL.Func(
-        [IDL.Text, IDL.Text, IDL.Opt(IDL.Text)],
-        [Result_1],
-        [],
-      ),
+    'createPost' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [Result_1], []),
     'getPosts' : IDL.Func([IDL.Opt(IDL.Text)], [IDL.Vec(Post)], ['query']),
     'likePost' : IDL.Func([PostId], [Result], []),
   });

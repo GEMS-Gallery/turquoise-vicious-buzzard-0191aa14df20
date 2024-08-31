@@ -17,7 +17,7 @@ actor {
     id: PostId;
     title: Text;
     imageUrl: Text;
-    category: ?Text;
+    category: Text;
     likes: Nat;
     comments: [Comment];
     createdAt: Time.Time;
@@ -45,7 +45,7 @@ actor {
   initializePostsMap();
 
   // API methods
-  public func createPost(title: Text, imageUrl: Text, category: ?Text) : async Result.Result<PostId, Text> {
+  public func createPost(title: Text, imageUrl: Text, category: Text) : async Result.Result<PostId, Text> {
     let postId = nextPostId;
     let newPost : Post = {
       id = postId;
@@ -67,10 +67,7 @@ actor {
       case (null) { allPosts };
       case (?category) {
         Array.filter<Post>(allPosts, func (post) {
-          switch (post.category) {
-            case (null) { false };
-            case (?postCategory) { Text.equal(postCategory, category) };
-          }
+          Text.equal(post.category, category)
         })
       };
     }

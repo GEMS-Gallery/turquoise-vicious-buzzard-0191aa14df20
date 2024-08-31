@@ -9,7 +9,7 @@ export interface Post {
   'createdAt' : Time,
   'likes' : bigint,
   'imageUrl' : string,
-  'category' : [] | [string],
+  'category' : string,
   'comments' : Array<Comment>,
 }
 export type PostId = bigint;
@@ -20,7 +20,7 @@ export type Result_1 = { 'ok' : PostId } |
 export type Time = bigint;
 export interface _SERVICE {
   'addComment' : ActorMethod<[PostId, string], Result>,
-  'createPost' : ActorMethod<[string, string, [] | [string]], Result_1>,
+  'createPost' : ActorMethod<[string, string, string], Result_1>,
   'getPosts' : ActorMethod<[[] | [string]], Array<Post>>,
   'likePost' : ActorMethod<[PostId], Result>,
 }

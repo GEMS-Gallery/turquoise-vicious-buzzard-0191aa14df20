@@ -5,7 +5,7 @@ interface Post {
   id: bigint;
   title: string;
   imageUrl: string;
-  category: string | null;
+  category: string;
   likes: bigint;
   comments: Comment[];
   createdAt: bigint;

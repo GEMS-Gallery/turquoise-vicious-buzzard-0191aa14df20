@@ -9,7 +9,7 @@ interface Post {
   id: bigint;
   title: string;
   imageUrl: string;
-  category: string | null;
+  category: string;
   likes: bigint;
   comments: Comment[];
   createdAt: bigint;
@@ -40,7 +40,7 @@ function App() {
     setLoading(false);
   };
 
-  const handleCreatePost = async (title: string, imageUrl: string, category: string | null) => {
+  const handleCreatePost = async (title: string, imageUrl: string, category: string) => {
     try {
       await backend.createPost(title, imageUrl, category);
       fetchPosts();

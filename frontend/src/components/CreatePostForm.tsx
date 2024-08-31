@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 
 interface CreatePostFormProps {
-  onCreatePost: (title: string, imageUrl: string, category: string | null) => void;
+  onCreatePost: (title: string, imageUrl: string, category: string) => void;
 }
 
 const CreatePostForm: React.FC<CreatePostFormProps> = ({ onCreatePost }) => {
   const [title, setTitle] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-  const [category, setCategory] = useState<string | null>(null);
+  const [category, setCategory] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (title && imageUrl) {
+    if (title && imageUrl && category) {
       onCreatePost(title, imageUrl, category);
       setTitle('');
       setImageUrl('');
-      setCategory(null);
+      setCategory('');
     }
   };
 
@@ -36,8 +36,9 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onCreatePost }) => {
         required
       />
       <select
-        value={category || ''}
-        onChange={(e) => setCategory(e.target.value || null)}
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        required
       >
         <option value="">Select category</option>
         <option value="Travel">Travel</option>

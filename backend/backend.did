@@ -12,7 +12,7 @@ type Result =
 type PostId = nat;
 type Post = 
  record {
-   category: opt text;
+   category: text;
    comments: vec Comment;
    createdAt: Time;
    id: PostId;
@@ -27,7 +27,7 @@ type Comment =
  };
 service : {
   addComment: (PostId, text) -> (Result);
-  createPost: (text, text, opt text) -> (Result_1);
+  createPost: (text, text, text) -> (Result_1);
   getPosts: (opt text) -> (vec Post) query;
   likePost: (PostId) -> (Result);
 }

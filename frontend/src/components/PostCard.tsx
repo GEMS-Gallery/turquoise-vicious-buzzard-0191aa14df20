@@ -4,7 +4,7 @@ interface Post {
   id: bigint;
   title: string;
   imageUrl: string;
-  category: string | null;
+  category: string;
   likes: bigint;
   comments: Comment[];
   createdAt: bigint;
@@ -41,7 +41,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLikePost, onAddComment }) =
       <div className="post-header">
         <img src="/api/placeholder/32/32" alt="User Avatar" />
         <span className="username">{post.title}</span>
-        {post.category && <span className="category-tag">{post.category}</span>}
+        <span className="category-tag">{post.category}</span>
       </div>
       <div className="post-image">
         <img src={post.imageUrl} alt={post.title} />
@@ -60,7 +60,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, onLikePost, onAddComment }) =
         <span className="post-likes">{post.likes.toString()} likes</span>
       </div>
       <div className="post-caption">
-        <strong>{post.title}</strong> {/* You might want to add a caption field to your Post type */}
+        <strong>{post.title}</strong>
       </div>
       <div className="comments">
         {post.comments.map((comment, index) => (
