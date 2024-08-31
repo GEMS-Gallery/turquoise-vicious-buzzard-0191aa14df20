@@ -2,11 +2,11 @@ import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
 import type { IDL } from '@dfinity/candid';
 
-export interface Comment { 'createdAt' : Time, 'text' : string }
+export interface Comment { 'createdAt' : bigint, 'text' : string }
 export interface Post {
   'id' : PostId,
   'title' : string,
-  'createdAt' : Time,
+  'createdAt' : bigint,
   'likes' : bigint,
   'imageUrl' : string,
   'category' : string,
@@ -17,7 +17,6 @@ export type Result = { 'ok' : null } |
   { 'err' : string };
 export type Result_1 = { 'ok' : PostId } |
   { 'err' : string };
-export type Time = bigint;
 export interface _SERVICE {
   'addComment' : ActorMethod<[PostId, string], Result>,
   'createPost' : ActorMethod<[string, string, string], Result_1>,

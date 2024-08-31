@@ -2,12 +2,11 @@ export const idlFactory = ({ IDL }) => {
   const PostId = IDL.Nat;
   const Result = IDL.Variant({ 'ok' : IDL.Null, 'err' : IDL.Text });
   const Result_1 = IDL.Variant({ 'ok' : PostId, 'err' : IDL.Text });
-  const Time = IDL.Int;
-  const Comment = IDL.Record({ 'createdAt' : Time, 'text' : IDL.Text });
+  const Comment = IDL.Record({ 'createdAt' : IDL.Int, 'text' : IDL.Text });
   const Post = IDL.Record({
     'id' : PostId,
     'title' : IDL.Text,
-    'createdAt' : Time,
+    'createdAt' : IDL.Int,
     'likes' : IDL.Nat,
     'imageUrl' : IDL.Text,
     'category' : IDL.Text,

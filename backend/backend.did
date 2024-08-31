@@ -1,4 +1,3 @@
-type Time = int;
 type Result_1 = 
  variant {
    err: text;
@@ -14,7 +13,7 @@ type Post =
  record {
    category: text;
    comments: vec Comment;
-   createdAt: Time;
+   createdAt: int;
    id: PostId;
    imageUrl: text;
    likes: nat;
@@ -22,7 +21,7 @@ type Post =
  };
 type Comment = 
  record {
-   createdAt: Time;
+   createdAt: int;
    "text": text;
  };
 service : {

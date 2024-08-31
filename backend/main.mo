@@ -1,8 +1,8 @@
 import Hash "mo:base/Hash";
-import Nat "mo:base/Nat";
 
 import Array "mo:base/Array";
 import Int "mo:base/Int";
+import Nat "mo:base/Nat";
 import Text "mo:base/Text";
 import Time "mo:base/Time";
 import Result "mo:base/Result";
@@ -11,7 +11,6 @@ import Iter "mo:base/Iter";
 import Option "mo:base/Option";
 
 actor {
-  // Types
   type PostId = Nat;
   type Post = {
     id: PostId;
@@ -20,31 +19,26 @@ actor {
     category: Text;
     likes: Nat;
     comments: [Comment];
-    createdAt: Time.Time;
+    createdAt: Int;
   };
   type Comment = {
     text: Text;
-    createdAt: Time.Time;
+    createdAt: Int;
   };
 
-  // Stable variables
   stable var posts : [Post] = [];
   stable var nextPostId : PostId = 0;
 
-  // Mutable state
-  let postsMap = HashMap.HashMap<PostId, Post>(0, Int.equal, Int.hash);
+  let postsMap = HashMap.HashMap<PostId, Post>(0, Nat.equal, Int.hash);
 
-  // Helper functions
   func initializePostsMap() {
     for (post in posts.vals()) {
       postsMap.put(post.id, post);
     };
   };
 
-  // Initialize posts map
   initializePostsMap();
 
-  // API methods
   public func createPost(title: Text, imageUrl: Text, category: Text) : async Result.Result<PostId, Text> {
     let postId = nextPostId;
     let newPost : Post = {
@@ -103,12 +97,10 @@ actor {
     }
   };
 
-  // Pre-upgrade
   system func preupgrade() {
     posts := Iter.toArray(postsMap.vals());
   };
 
-  // Post-upgrade
   system func postupgrade() {
     initializePostsMap();
   };
