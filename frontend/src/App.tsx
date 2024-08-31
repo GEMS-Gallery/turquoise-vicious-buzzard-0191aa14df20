@@ -23,6 +23,7 @@ interface Comment {
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
@@ -31,11 +32,13 @@ function App() {
 
   const fetchPosts = async () => {
     setLoading(true);
+    setError(null);
     try {
-      const fetchedPosts = await backend.getPosts(selectedCategory);
+      const fetchedPosts = await backend.getPosts(selectedCategory ? [selectedCategory] : []);
       setPosts(fetchedPosts);
     } catch (error) {
       console.error('Error fetching posts:', error);
+      setError('Failed to fetch posts. Please try again.');
     }
     setLoading(false);
   };
@@ -46,6 +49,7 @@ function App() {
       fetchPosts();
     } catch (error) {
       console.error('Error creating post:', error);
+      setError('Failed to create post. Please try again.');
     }
   };
 
@@ -55,6 +59,7 @@ function App() {
       fetchPosts();
     } catch (error) {
       console.error('Error liking post:', error);
+      setError('Failed to like post. Please try again.');
     }
   };
 
@@ -64,6 +69,7 @@ function App() {
       fetchPosts();
     } catch (error) {
       console.error('Error adding comment:', error);
+      setError('Failed to add comment. Please try again.');
     }
   };
 
@@ -74,6 +80,7 @@ function App() {
         <Sidebar onSelectCategory={setSelectedCategory} selectedCategory={selectedCategory} />
         <div className="feed">
           <CreatePostForm onCreatePost={handleCreatePost} />
+          {error && <p className="error-message">{error}</p>}
           {loading ? (
             <p>Loading...</p>
           ) : (

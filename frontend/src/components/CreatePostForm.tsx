@@ -8,19 +8,24 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onCreatePost }) => {
   const [title, setTitle] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [category, setCategory] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     if (title && imageUrl && category) {
       onCreatePost(title, imageUrl, category);
       setTitle('');
       setImageUrl('');
       setCategory('');
+    } else {
+      setError('Please fill in all fields');
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="create-post-form">
+      {error && <p className="error-message">{error}</p>}
       <input
         type="text"
         placeholder="Title"

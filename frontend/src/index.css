@@ -205,3 +205,8 @@ body {
 .create-post-form button:hover {
   background-color: #0081d6;
 }
+
+.error-message {
+  color: #ed4956;
+  margin-bottom: 10px;
+}
