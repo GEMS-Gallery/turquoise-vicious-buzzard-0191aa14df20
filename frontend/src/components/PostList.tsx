@@ -1,5 +1,4 @@
 import React from 'react';
-import { Grid } from '@mui/material';
 import PostCard from './PostCard';
 
 interface Post {
@@ -25,17 +24,16 @@ interface PostListProps {
 
 const PostList: React.FC<PostListProps> = ({ posts, onLikePost, onAddComment }) => {
   return (
-    <Grid container spacing={3}>
+    <div>
       {posts.map((post) => (
-        <Grid item xs={12} sm={6} md={4} key={post.id.toString()}>
-          <PostCard
-            post={post}
-            onLikePost={onLikePost}
-            onAddComment={onAddComment}
-          />
-        </Grid>
+        <PostCard
+          key={post.id.toString()}
+          post={post}
+          onLikePost={onLikePost}
+          onAddComment={onAddComment}
+        />
       ))}
-    </Grid>
+    </div>
   );
 };
 

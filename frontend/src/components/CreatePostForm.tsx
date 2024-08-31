@@ -1,92 +1,52 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
 
 interface CreatePostFormProps {
   onCreatePost: (title: string, imageUrl: string, category: string | null) => void;
 }
 
 const CreatePostForm: React.FC<CreatePostFormProps> = ({ onCreatePost }) => {
-  const { control, handleSubmit, reset } = useForm();
-  const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [category, setCategory] = useState<string | null>(null);
 
-  const onSubmit = async (data: { title: string; imageUrl: string; category: string | null }) => {
-    setLoading(true);
-    await onCreatePost(data.title, data.imageUrl, data.category);
-    setLoading(false);
-    reset();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (title && imageUrl) {
+      onCreatePost(title, imageUrl, category);
+      setTitle('');
+      setImageUrl('');
+      setCategory(null);
+    }
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
-      <Controller
-        name="title"
-        control={control}
-        defaultValue=""
-        rules={{ required: 'Title is required' }}
-        render={({ field, fieldState: { error } }) => (
-          <TextField
-            {...field}
-            margin="normal"
-            required
-            fullWidth
-            id="title"
-            label="Title"
-            error={!!error}
-            helperText={error ? error.message : null}
-          />
-        )}
+    <form onSubmit={handleSubmit} className="create-post-form">
+      <input
+        type="text"
+        placeholder="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
       />
-      <Controller
-        name="imageUrl"
-        control={control}
-        defaultValue=""
-        rules={{ required: 'Image URL is required' }}
-        render={({ field, fieldState: { error } }) => (
-          <TextField
-            {...field}
-            margin="normal"
-            required
-            fullWidth
-            id="imageUrl"
-            label="Image URL"
-            error={!!error}
-            helperText={error ? error.message : null}
-          />
-        )}
+      <input
+        type="url"
+        placeholder="Image URL"
+        value={imageUrl}
+        onChange={(e) => setImageUrl(e.target.value)}
+        required
       />
-      <Controller
-        name="category"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <FormControl fullWidth margin="normal">
-            <InputLabel id="category-label">Category</InputLabel>
-            <Select
-              {...field}
-              labelId="category-label"
-              id="category"
-              label="Category"
-            >
-              <MenuItem value="">None</MenuItem>
-              <MenuItem value="Travel">Travel</MenuItem>
-              <MenuItem value="People">People</MenuItem>
-              <MenuItem value="Food">Food</MenuItem>
-              <MenuItem value="Sports">Sports</MenuItem>
-            </Select>
-          </FormControl>
-        )}
-      />
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        disabled={loading}
+      <select
+        value={category || ''}
+        onChange={(e) => setCategory(e.target.value || null)}
       >
-        {loading ? 'Creating...' : 'Create Post'}
-      </Button>
-    </Box>
+        <option value="">Select category</option>
+        <option value="Travel">Travel</option>
+        <option value="People">People</option>
+        <option value="Food">Food</option>
+        <option value="Sports">Sports</option>
+      </select>
+      <button type="submit">Create Post</button>
+    </form>
   );
 };
 

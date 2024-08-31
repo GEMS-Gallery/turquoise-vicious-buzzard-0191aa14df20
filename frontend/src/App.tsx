@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { backend } from 'declarations/backend';
-import { Container, Grid, CircularProgress } from '@mui/material';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import PostList from './components/PostList';
@@ -69,29 +68,23 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div>
       <Header />
-      <Container maxWidth="lg" className="mt-8">
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={3}>
-            <Sidebar onSelectCategory={setSelectedCategory} selectedCategory={selectedCategory} />
-          </Grid>
-          <Grid item xs={12} md={9}>
-            <CreatePostForm onCreatePost={handleCreatePost} />
-            {loading ? (
-              <div className="flex justify-center items-center h-64">
-                <CircularProgress />
-              </div>
-            ) : (
-              <PostList
-                posts={posts}
-                onLikePost={handleLikePost}
-                onAddComment={handleAddComment}
-              />
-            )}
-          </Grid>
-        </Grid>
-      </Container>
+      <div className="container">
+        <Sidebar onSelectCategory={setSelectedCategory} selectedCategory={selectedCategory} />
+        <div className="feed">
+          <CreatePostForm onCreatePost={handleCreatePost} />
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <PostList
+              posts={posts}
+              onLikePost={handleLikePost}
+              onAddComment={handleAddComment}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
