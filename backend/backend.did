@@ -1,0 +1,33 @@
+type Time = int;
+type Result_1 = 
+ variant {
+   err: text;
+   ok: PostId;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok;
+ };
+type PostId = nat;
+type Post = 
+ record {
+   category: opt text;
+   comments: vec Comment;
+   createdAt: Time;
+   id: PostId;
+   imageUrl: text;
+   likes: nat;
+   title: text;
+ };
+type Comment = 
+ record {
+   createdAt: Time;
+   "text": text;
+ };
+service : {
+  addComment: (PostId, text) -> (Result);
+  createPost: (text, text, opt text) -> (Result_1);
+  getPosts: (opt text) -> (vec Post) query;
+  likePost: (PostId) -> (Result);
+}
